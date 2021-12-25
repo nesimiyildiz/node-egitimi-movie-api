@@ -6,7 +6,7 @@ const logger = require('morgan');
 const bodyParser=require('body-parser')
 const index = require('./routes/index');
 const movies = require('./routes/movie');
-
+const director = require('./routes/director');
 const app = express();
 //db connection
 const db=require('./helper/db')();
@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/api/movies', movies);
-
+app.use('/api/directors', director);
 // catch 404 and forward to error handler
 app.use((req, res, next)=> {
   next(createError(404));
