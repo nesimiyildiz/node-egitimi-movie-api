@@ -34,7 +34,18 @@ router.post('/', (req, res, next)=> {
 //Tüm Filmleri getir
 
 router.get('/',(req,res,next)=>{
-  const promise=Movie.find({});
+  const promise=Movie.aggregate([
+    {
+      $lookup:{
+        from:'directors',
+        localField:'director_id',
+        foreignField:'_id',
+        as:'director'
+      }
+    },{
+      $unwind:'$director'
+    }
+  ]);
   promise.then((data)=>{
     res.json(data)
   }).catch((err)=>{
